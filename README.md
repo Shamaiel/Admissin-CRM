@@ -59,30 +59,24 @@ admission-crm/
 ### 1. Clone the Repository
 ```bash
 git clone <your-repo-url>
-cd admission-crm
 ```
 
 ### 2. Backend Setup
 ```bash
 cd backend
 npm install
-cp .env.example .env
-# Edit .env — set MONGO_URI and JWT_SECRET
 ```
 
 **`.env` file:**
 ```
 PORT=5000
-MONGO_URI=mongodb://localhost:27017/admission_crm
-JWT_SECRET=your_super_secret_key_here
+MONGO_URI=mongodb+srv://mswani258:A4OEguy3lfZBHuX7@cluster0.rgwbyny.mongodb.net/?appName=Cluster0
+JWT_SECRET=your_super_secret_jwt_key_change_in_production
 JWT_EXPIRE=7d
 NODE_ENV=development
 ```
 
-### 3. Seed Demo Data
-```bash
-node config/seed.js
-```
+
 
 This creates:
 - 1 Institution, 1 Campus, 2 Departments, 1 Academic Year, 2 Programs
@@ -106,17 +100,15 @@ npm start
 ```
 App runs at: `http://localhost:3000`
 
-> The frontend proxies `/api` to `http://localhost:5000` via `package.json` proxy setting.
-
 ---
 
 ## 🔑 Test Credentials
 
 | Role             | Email                  | Password    |
 |------------------|------------------------|-------------|
-| Admin            | admin@edumerge.com     | admin123    |
-| Admission Officer | officer@edumerge.com  | officer123  |
-| Management       | mgmt@edumerge.com      | mgmt123     |
+| Admin            | admin@edumerge.com     | Wani@123    |
+| Admission Officer | officer@edumerge.com  | Wani@123    |
+| Management       | mgmt@edumerge.com      | Wani@123    |
 
 ---
 
@@ -238,3 +230,4 @@ GET    /api/dashboard/summary
 5. Click **Mark as Paid**
 6. Click **Confirm Admission** → Admission Number is generated
 7. Login as **Management** → View Dashboard & Seat Matrix
+

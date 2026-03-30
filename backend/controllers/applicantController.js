@@ -38,6 +38,7 @@ exports.getAll = async (req, res) => {
       .populate('createdBy', 'name')
       .sort({ createdAt: -1 });
 
+      
     res.json({ success: true, data: applicants, total: applicants.length });
   } catch (err) {
     console.error('getAll applicants error:', err); // log full error
