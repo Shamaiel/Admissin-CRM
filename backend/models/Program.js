@@ -37,12 +37,21 @@ programSchema.pre('save', function (next) {
   next();
 });
 
+// programSchema.virtual('totalFilled').get(function () {
+//   return this.quotas.reduce((sum, q) => sum + q.filled, 0);
+// });
+
+// programSchema.virtual('totalAvailable').get(function () {
+//   return this.totalIntake - this.totalFilled;
+// });
 programSchema.virtual('totalFilled').get(function () {
-  return this.quotas.reduce((sum, q) => sum + q.filled, 0);
+  if (!this.quotas || !Array.isArray(this.quotas)) return 0;
+  return this.quotas.reduce((sum, q) => sum + (q.filled || 0), 0);
 });
 
 programSchema.virtual('totalAvailable').get(function () {
-  return this.totalIntake - this.totalFilled;
+  if (!this.quotas || !Array.isArray(this.quotas)) return this.totalIntake || 0;
+  return this.totalIntake - this.quotas.reduce((sum, q) => sum + (q.filled || 0), 0);
 });
 
 module.exports = mongoose.model('Program', programSchema);

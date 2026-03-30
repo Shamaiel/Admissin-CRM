@@ -15,21 +15,36 @@ exports.getSummary = async (req, res) => {
       .populate('campus', 'name')
       .lean();
 
+    // const seatMatrix = programs.map((p) => ({
+    //   programId: p._id,
+    //   name: p.name,
+    //   code: p.code,
+    //   courseType: p.courseType,
+    //   totalIntake: p.totalIntake,
+    //   totalFilled: p.quotas.reduce((s, q) => s + q.filled, 0),
+    //   totalAvailable: p.totalIntake - p.quotas.reduce((s, q) => s + q.filled, 0),
+    //   quotas: p.quotas.map((q) => ({
+    //     name: q.name,
+    //     seats: q.seats,
+    //     filled: q.filled,
+    //     available: q.seats - q.filled,
+    //   })),
+    // }));
     const seatMatrix = programs.map((p) => ({
-      programId: p._id,
-      name: p.name,
-      code: p.code,
-      courseType: p.courseType,
-      totalIntake: p.totalIntake,
-      totalFilled: p.quotas.reduce((s, q) => s + q.filled, 0),
-      totalAvailable: p.totalIntake - p.quotas.reduce((s, q) => s + q.filled, 0),
-      quotas: p.quotas.map((q) => ({
-        name: q.name,
-        seats: q.seats,
-        filled: q.filled,
-        available: q.seats - q.filled,
-      })),
-    }));
+  programId: p._id,
+  name: p.name,
+  code: p.code,
+  courseType: p.courseType,
+  totalIntake: p.totalIntake,
+  totalFilled: (p.quotas || []).reduce((s, q) => s + (q.filled || 0), 0),
+  totalAvailable: p.totalIntake - (p.quotas || []).reduce((s, q) => s + (q.filled || 0), 0),
+  quotas: (p.quotas || []).map((q) => ({
+    name: q.name,
+    seats: q.seats,
+    filled: q.filled || 0,
+    available: q.seats - (q.filled || 0),
+  })),
+}));
 
     // Totals
     const totalIntake   = seatMatrix.reduce((s, p) => s + p.totalIntake, 0);

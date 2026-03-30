@@ -1,6 +1,28 @@
 const Applicant = require('../models/Applicant');
 const Program = require('../models/Program');
 
+// exports.getAll = async (req, res) => {
+//   try {
+//     const filter = {};
+//     if (req.query.status) filter.status = req.query.status;
+//     if (req.query.program) filter.program = req.query.program;
+//     if (req.query.quotaType) filter.quotaType = req.query.quotaType;
+//     if (req.query.institution) filter.institution = req.query.institution;
+
+//     const applicants = await Applicant.find(filter)
+//       .populate('program', 'name code courseType')
+//       .populate('institution', 'name code')
+//       .populate('academicYear', 'label')
+//       .populate('createdBy', 'name')
+//       .sort({ createdAt: -1 });
+
+//     res.json({ success: true, data: applicants, total: applicants.length });
+//   } catch (err) {
+//     res.status(500).json({ success: false, message: err.message });
+//   }
+// };
+
+
 exports.getAll = async (req, res) => {
   try {
     const filter = {};
@@ -10,7 +32,7 @@ exports.getAll = async (req, res) => {
     if (req.query.institution) filter.institution = req.query.institution;
 
     const applicants = await Applicant.find(filter)
-      .populate('program', 'name code courseType')
+      .populate('program', 'name code courseType quotas totalIntake')
       .populate('institution', 'name code')
       .populate('academicYear', 'label')
       .populate('createdBy', 'name')
@@ -18,9 +40,11 @@ exports.getAll = async (req, res) => {
 
     res.json({ success: true, data: applicants, total: applicants.length });
   } catch (err) {
+    console.error('getAll applicants error:', err); // log full error
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
 
 exports.getOne = async (req, res) => {
   try {

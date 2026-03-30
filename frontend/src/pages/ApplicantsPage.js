@@ -37,6 +37,7 @@ export default function ApplicantsPage() {
   const [filterStatus, setFilterStatus] = useState('');
   const navigate = useNavigate();
 
+
   const fetch = async () => {
     setLoading(true);
     try {
@@ -44,6 +45,7 @@ export default function ApplicantsPage() {
         applicantService.getAll(filterStatus ? { status: filterStatus } : {}),
         programService.getAll(), institutionService.getAll(), academicYearService.getAll()
       ]);
+      console.log("TTTTTT------", i)
       setApplicants(a.data.data || []);
       setPrograms(p.data.data || []);
       setInstitutions(i.data.data || []);
@@ -51,6 +53,7 @@ export default function ApplicantsPage() {
     } catch { toast.error('Failed to load applicants'); }
     finally { setLoading(false); }
   };
+
 
   useEffect(() => { fetch(); }, [filterStatus]);
 
