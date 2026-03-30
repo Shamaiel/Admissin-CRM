@@ -67,7 +67,7 @@ cd backend
 npm install
 ```
 
-**`.env` file:**
+**`backend/.env` file:**
 ```
 PORT=5000
 MONGO_URI=mongodb+srv://mswani258:A4OEguy3lfZBHuX7@cluster0.rgwbyny.mongodb.net/?appName=Cluster0
@@ -75,6 +75,12 @@ JWT_SECRET=your_super_secret_jwt_key_change_in_production
 JWT_EXPIRE=7d
 NODE_ENV=development
 ```
+
+**`frontend/.env` file:**
+```
+REACT_APP_API_URL=http://localhost:5000/api
+```
+
 
 
 
